@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div>
+                    <h1>你想好了吗？</h1>
+                    <h2>确认删除？</h2>
+                    <h3>R U ok?</h3>
+                </div>
+                <span><button type="submit" class="btn btn-info" value="确认删除？">确认删除？</button></span>
+                <br>
+                <span><a  href="{{ list_url }}" style="font-size: xx-large">不删了(点我)</a></span>
+
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

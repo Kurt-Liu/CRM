@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 " role="main">
+
+            <div class="panel panel-success">
+
+                <div class="panel-heading">
+                    <span style="font-size: x-large;">{{ title|upper }} 表数据
+                        {% if showlist.config_obj.search_fields %}
+                            <form method="get" action="" class="form-inline " style="display: inline-block;">
+                                <div class="input-group">
+                                    <input name="q" type="text" class="form-control" placeholder="搜索">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-info" type="submit">搜索</button>
+                                  </span>
+                                </div>
+                            </form>
+                        {% endif %}
+                        <a class="pull-right" href="{{ add_url }}">添加数据</a></span>
+                </div>
+
+                <div class="panel-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                {% for item in showlist.get_headers %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for data in showlist.get_body %}
+                                <tr>
+                                    {% for item in data %}
+                                        <td>
+                                            {{ item }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    <span class="pull-left" style="color: slategray;">Actions&nbsp</span>
+                    <div class="pull-left">
+                        <select name="action" class="form-control form-inline pull-left" >
+                            <option value="">-----------------</option>
+                            {% for func in showlist.get_new_actions %}
+                                <option value="{{ func.name }}">{{ func.text }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button class="btn btn-info">提交</button>
+                     </form>
+                </div>
+
+
+            </div>
+            <div class="pull-right">
+                {{ showlist.pagination.ret_html| safe }}
+            </div>
+        </div>
+        <div class="col-md-3" role="complementary">
+            <div class="filter">
+                {% for field,links in showlist.get_list_filter_links.items %}
+                      <div class="panel panel-success">
+                          <div class="panel-heading ">By {{ field|title }}</div>
+                          <div class="panel-body">
+
+                            {% for link in links %}
+                            <p>{{ link|safe }}</p>
+                            {% endfor %}
+
+                          </div>
+                        </div>
+                 {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
